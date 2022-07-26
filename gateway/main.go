@@ -2,8 +2,8 @@ package main
 
 import (
 	"context"
-	authpb "gateway/gen/go/proto"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	authpb "github.com/shenxiang11/coolcar/auth-service/gen/go/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/protobuf/encoding/protojson"
@@ -27,7 +27,7 @@ func main() {
 	))
 
 	err := authpb.RegisterAuthServiceHandlerFromEndpoint(
-		c, mux, "localhost:8081",
+		c, mux, "localhost:10001",
 		[]grpc.DialOption{
 			grpc.WithTransportCredentials(insecure.NewCredentials()),
 		},
@@ -37,5 +37,5 @@ func main() {
 		log.Fatalf("cannot register auth service: %v", err)
 	}
 
-	http.ListenAndServe(":8080", mux)
+	http.ListenAndServe(":10000", mux)
 }

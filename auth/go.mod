@@ -1,4 +1,4 @@
-module auth-service
+module github/shenxiang11/coolcar/auth-service
 
 go 1.18
 

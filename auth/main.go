@@ -1,9 +1,9 @@
 package main
 
 import (
-	"auth-service/auth"
-	authpb "auth-service/gen/go/proto"
-	"auth-service/wechat"
+	"github/shenxiang11/coolcar/auth-service/auth"
+	authpb "github/shenxiang11/coolcar/auth-service/gen/go/proto"
+	"github/shenxiang11/coolcar/auth-service/wechat"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"log"
@@ -16,7 +16,7 @@ func main() {
 		log.Fatalf("cannot create logger: %v", err)
 	}
 
-	lis, err := net.Listen("tcp", ":8081")
+	lis, err := net.Listen("tcp", ":10001")
 	if err != nil {
 		logger.Fatal("cannot listen", zap.Error(err))
 	}

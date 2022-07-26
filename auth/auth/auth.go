@@ -1,8 +1,8 @@
 package auth
 
 import (
-	authpb "auth-service/gen/go/proto"
 	"context"
+	authpb "github/shenxiang11/coolcar/auth-service/gen/go/proto"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
