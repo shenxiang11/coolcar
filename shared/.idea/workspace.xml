@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="59015875-49b3-45ea-ac8f-e347a0ea2dba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/auth/token/token.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth/token/token_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/dao/mongo.go" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/dao/mongo.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/dao/mongo_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/dao/mongo_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
