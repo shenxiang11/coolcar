@@ -4,23 +4,22 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9b201e89-ad29-4c02-b37a-75e998b68681" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../shared/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../shared/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../shared/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../shared/.idea/shared.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../shared/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../shared/go.mod" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../shared/go.sum" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../shared/mongo/mongo.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../auth/auth/auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/auth/auth.go" afterDir="false" />
+    <list default="true" id="59015875-49b3-45ea-ac8f-e347a0ea2dba" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/id/id.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mongo/objid/objid.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testing/mongotesting.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/dao/mongo.go" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/dao/mongo.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/dao/mongo_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/dao/mongo_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../auth/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../auth/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../auth/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../coolcar/miniprogram/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../coolcar/miniprogram/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../coolcar/project.config.json" beforeDir="false" afterPath="$PROJECT_DIR$/../coolcar/project.config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shard/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shard/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mongo/mongo.go" beforeDir="false" afterPath="$PROJECT_DIR$/mongo/mongo.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,14 +33,14 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file:///usr/local/opt/go/libexec" />
+  <component name="GOROOT" url="file:///usr/local/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2CTyPsjp8gWjkaroGLNjo0u3vtX" />
+  <component name="ProjectId" id="2CVTOjS8zCZCC9HX5p9HeXRFnhP" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -51,8 +50,6 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "DefaultGoTemplateProperty": "Go File",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -63,34 +60,13 @@
     "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
     "WebServerToolWindowFactoryState": "false",
     "go.import.settings.migrated": "true",
-    "last_opened_file_path": "/Users/shenxiang",
+    "last_opened_file_path": "/Users/xiang.shen",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
-      <module name="shared" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <package value="shard" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
-      <module name="shared" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="DIRECTORY" />
-      <package value="shard" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <method v="2" />
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
@@ -105,9 +81,6 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
