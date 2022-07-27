@@ -3,6 +3,7 @@ module github/shenxiang11/coolcar/auth-service
 go 1.18
 
 require (
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.11.0
 	github.com/shenxiang11/coolcar/shared v0.0.0-00010101000000-000000000000
 	go.mongodb.org/mongo-driver v1.10.0

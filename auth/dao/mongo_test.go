@@ -18,7 +18,8 @@ func TestResoleAccountID(t *testing.T) {
 		t.Fatalf("cannot connect mongodb: %v", err)
 	}
 
-	m := NewMongoWithMock(mc.Database("coolcar"), mgo.MockNewObjIdWithValue(id.AccountID("62e0b23a691951fd24073fa8")))
+	m := NewMongo(mc.Database("coolcar"))
+	m.genID = mgo.MockNewObjIdWithValue(id.AccountID("62e0b23a691951fd24073fa8"))
 	_, err = m.col.InsertMany(c, []any{
 		bson.M{
 			mgo.IDFieldName: objid.MustFromID(id.AccountID("5f7c245ab0361e00ffb9fd6f")),

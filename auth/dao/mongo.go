@@ -23,13 +23,6 @@ func NewMongo(db *mongo.Database) *Mongo {
 	}
 }
 
-func NewMongoWithMock(db *mongo.Database, genIDFunc func() primitive.ObjectID) *Mongo {
-	return &Mongo{
-		col:   db.Collection("account"),
-		genID: genIDFunc,
-	}
-}
-
 func (m *Mongo) ResolveAccountID(c context.Context, openID string) (string, error) {
 	insertID := m.genID()
 	res := m.col.FindOneAndUpdate(c, bson.M{
