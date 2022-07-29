@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/golang-jwt/jwt"
 	"github/shenxiang11/coolcar/auth-service/auth"
 	"github/shenxiang11/coolcar/auth-service/dao"
@@ -18,7 +19,7 @@ import (
 	"os"
 )
 
-var privateKeyFile = "auth/private.key"
+var privateKeyFile = "auth/token/private.key"
 
 func main() {
 	logger, err := zap.NewDevelopment()
@@ -36,6 +37,9 @@ func main() {
 	if err != nil {
 		logger.Fatal("cannot connect mongodb", zap.Error(err))
 	}
+
+	dir, err := os.Getwd()
+	fmt.Println(dir)
 
 	pkFile, err := os.Open(privateKeyFile)
 	if err != nil {

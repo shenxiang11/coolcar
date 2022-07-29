@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.11.0
 	github.com/shenxiang11/coolcar/auth-service v0.0.0-00010101000000-000000000000
+	github.com/shenxiang11/coolcar/rental-service v0.0.0-00010101000000-000000000000
 	google.golang.org/grpc v1.48.0
 	google.golang.org/protobuf v1.28.1
 )
@@ -18,3 +19,7 @@ require (
 )
 
 replace github.com/shenxiang11/coolcar/auth-service => ../auth
+
+replace github.com/shenxiang11/coolcar/rental-service => ../rental
+
+replace github.com/shenxiang11/coolcar/shared => ../shared
