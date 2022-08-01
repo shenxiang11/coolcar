@@ -4,14 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c80309f5-4a6f-4188-a009-65e1981e247e" name="Changes" comment="" />
+    <list default="true" id="c80309f5-4a6f-4188-a009-65e1981e247e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../auth/auth/public.key" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../auth/token/private.key" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/auth/private.key" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shared/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../shared/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shared/auth/auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/../shared/auth/auth.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -20,6 +27,7 @@
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="ProjectId" id="2CKzo1NUFOQ3C62VbhmQWNLP9EY" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -29,7 +37,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/shenxiang/Desktop/coolcar/coolcar",
+    "last_opened_file_path": "/Users/xiang.shen/Desktop/coolcar/coolcar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.stylelint": "true",
     "node.js.detected.package.tslint": "true",
@@ -52,6 +60,7 @@
       <updated>1658566237421</updated>
       <workItem from="1658566239271" duration="870000" />
       <workItem from="1658567478387" duration="689000" />
+      <workItem from="1659327648079" duration="203000" />
     </task>
     <servers />
   </component>
