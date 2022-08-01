@@ -35,8 +35,9 @@ func (s *Service) Resolve(code string) (string, error) {
 		return "", err
 	}
 
-	fmt.Println(string(body))
-	fmt.Println(respJSON)
+	if respJSON.OpenID == "" {
+		return "", fmt.Errorf("response code: %v, response error: %v", respJSON.ErrCode, respJSON.ErrMsg)
+	}
 
 	//map[errcode:41002 errmsg:appid missing, rid: 62de9999-02bc2880-3a17b2c4]
 	//map[errcode:40029 errmsg:invalid code, rid: 62de9a0b-7149b5f1-2eee4908]

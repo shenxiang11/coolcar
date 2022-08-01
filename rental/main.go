@@ -3,35 +3,26 @@ package main
 import (
 	rentalpb "github.com/shenxiang11/coolcar/rental/gen/go/proto"
 	"github.com/shenxiang11/coolcar/rental/trip"
-	auth "github.com/shenxiang11/coolcar/shared/auth"
-	"go.uber.org/zap"
+	"github.com/shenxiang11/coolcar/shared/server"
 	"google.golang.org/grpc"
 	"log"
-	"net"
 )
 
 func main() {
-	logger, err := zap.NewDevelopment()
+	logger, err := server.NewZapLogger()
 	if err != nil {
 		log.Fatalf("cannot create logger: %v", err)
 	}
 
-	lis, err := net.Listen("tcp", ":10002")
-	if err != nil {
-		logger.Fatal("cannot listen", zap.Error(err))
-	}
-
-	i, err := auth.Interceptor("../shared/auth/public.key")
-	if err != nil {
-		logger.Fatal("cannot interceptor", zap.Error(err))
-	}
-	s := grpc.NewServer(grpc.UnaryInterceptor(i))
-	rentalpb.RegisterTripServiceServer(s, &trip.Service{
+	logger.Sugar().Fatal(server.RunGRPCServer(&server.GRPCConfig{
+		Name:              "rental",
+		Addr:              "localhost:10002",
+		AuthPublicKeyFile: "../shared/auth/public.key",
+		RegisterFunc: func(server *grpc.Server) {
+			rentalpb.RegisterTripServiceServer(server, &trip.Service{
+				Logger: logger,
+			})
+		},
 		Logger: logger,
-	})
-
-	err = s.Serve(lis)
-	if err != nil {
-		logger.Fatal("cannot serve", zap.Error(err))
-	}
+	}))
 }

@@ -31,7 +31,7 @@ func (s *Service) Login(ctx context.Context, req *authpb.LoginRequest) (*authpb.
 	s.Logger.Info("received", zap.String("code", req.Code))
 	openID, err := s.OpenIDResolver.Resolve(req.Code)
 	if err != nil {
-		return nil, status.Errorf(codes.Unavailable, "cannot resolve optionid: %v", err)
+		return nil, status.Errorf(codes.Unavailable, "cannot resolve openid: %v", err)
 	}
 
 	accountID, err := s.Mongo.ResolveAccountID(ctx, openID)
