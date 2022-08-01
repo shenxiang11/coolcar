@@ -16,9 +16,10 @@ import (
 
 const ImpersonateAccountHeader = "impersonate-account-id"
 const authorizationHeader = "authorization"
-const bearerPrefix = "Bearer"
+const bearerPrefix = "Bearer "
 
 func Interceptor(publicKeyFile string) (grpc.UnaryServerInterceptor, error) {
+
 	f, err := os.Open(publicKeyFile)
 	if err != nil {
 		return nil, fmt.Errorf("cannot open public key file: %v", err)

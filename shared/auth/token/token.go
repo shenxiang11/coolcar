@@ -15,6 +15,7 @@ func (v *JWTTokenVerifier) Verify(token string) (string, error) {
 		return v.PublicKey, nil
 	})
 	if err != nil {
+		fmt.Println(token, err)
 		return "", fmt.Errorf("cannot parse token: %v", err)
 	}
 
