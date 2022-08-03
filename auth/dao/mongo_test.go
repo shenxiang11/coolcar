@@ -63,7 +63,7 @@ func TestResoleAccountID(t *testing.T) {
 			if err != nil {
 				t.Errorf("failed resolve account id for %q: %v", cc.openID, err)
 			}
-			if id != cc.want {
+			if id.String() != cc.want {
 				t.Errorf("resolve acount id, want %q, got %q", cc.want, id)
 			}
 		})

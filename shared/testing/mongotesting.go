@@ -78,3 +78,13 @@ func NewClient(c context.Context) (*mongo.Client, error) {
 
 	return mongo.Connect(c, options.Client().ApplyURI(mongoURI))
 }
+
+func SetupIndexes(c context.Context, d *mongo.Database) error {
+	//_, err := d.Collection("account").Indexes().CreateOne(c)
+	//if err != nil {
+	//	return err
+	//}
+	//
+	//_, err := d.Collection("trip").Indexes()
+	return nil
+}

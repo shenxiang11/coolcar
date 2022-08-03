@@ -8,9 +8,14 @@ import (
 )
 
 const IDFieldName = "_id"
+const UpdatedAtFieldName = "updateat"
 
 type IDField struct {
 	ID primitive.ObjectID `bson:"_id"`
+}
+
+type UpdatedAtField struct {
+	UpdateAt int64 `bson:"updateat"`
 }
 
 var NewObjID = primitive.NewObjectID

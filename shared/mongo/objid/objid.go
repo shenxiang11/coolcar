@@ -21,3 +21,7 @@ func MustFromID(id fmt.Stringer) primitive.ObjectID {
 func ToAccountID(oid primitive.ObjectID) id.AccountID {
 	return id.AccountID(oid.Hex())
 }
+
+func ToTripID(oid primitive.ObjectID) id.TripID {
+	return id.TripID(oid.Hex())
+}
