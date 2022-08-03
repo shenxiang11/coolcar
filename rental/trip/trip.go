@@ -2,7 +2,7 @@ package trip
 
 import (
 	"context"
-	rentalpb "github.com/shenxiang11/coolcar/rental/gen/go/proto"
+	rentalpb "github.com/shenxiang11/coolcar/rental-service/gen/go/proto"
 	"github.com/shenxiang11/coolcar/shared/auth"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"

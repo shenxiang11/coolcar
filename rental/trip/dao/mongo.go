@@ -3,18 +3,21 @@ package dao
 import (
 	"context"
 	"fmt"
-	rentalpb "github.com/shenxiang11/coolcar/rental/gen/go/proto"
+	rentalpb "github.com/shenxiang11/coolcar/rental-service/gen/go/proto"
 	"github.com/shenxiang11/coolcar/shared/id"
 	mgo "github.com/shenxiang11/coolcar/shared/mongo"
+	"github.com/shenxiang11/coolcar/shared/mongo/objid"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"time"
 )
 
 const (
 	tripField      = "trip"
 	accountIDField = tripField + ".accountid"
+	statusField    = tripField + ".status"
 )
 
 type Mongo struct {
@@ -75,4 +78,57 @@ func (m *Mongo) GetTrip(c context.Context, id string, accountID id.AccountID) (*
 	}
 
 	return &tr, nil
+}
+
+func (m *Mongo) GetTrips(c context.Context, accountID id.AccountID, status rentalpb.TripStatus) ([]*TripRecord, error) {
+	filter := bson.M{
+		accountIDField: accountID,
+	}
+	if status != rentalpb.TripStatus_NOT_SPECIFIED {
+		filter[statusField] = status
+	}
+
+	res, err := m.col.Find(c, filter, options.Find().SetSort(bson.M{mgo.IDFieldName: -1}))
+	if err != nil {
+		return nil, err
+	}
+
+	var trips []*TripRecord
+	for res.Next(c) {
+		var trip TripRecord
+		err := res.Decode(&trip)
+		if err != nil {
+			return nil, err
+		}
+		trips = append(trips, &trip)
+	}
+
+	return trips, nil
+}
+
+func (m *Mongo) UpdateTrip(c context.Context, tid id.TripID, aid id.AccountID, updateAt int64, trip *rentalpb.Trip) error {
+	objID, err := objid.FromID(tid)
+	if err != nil {
+		return fmt.Errorf("invalid id: %v", err)
+	}
+
+	newUpdateAt := m.NowFunc()
+	res, err := m.col.UpdateOne(c, bson.M{
+		mgo.IDFieldName:        objID,
+		accountIDField:         aid.String(),
+		mgo.UpdatedAtFieldName: updateAt,
+	}, mgo.Set(bson.M{
+		tripField:              trip,
+		mgo.UpdatedAtFieldName: newUpdateAt,
+	}))
+
+	if err != nil {
+		return err
+	}
+
+	if res.MatchedCount == 0 {
+		return mongo.ErrNoDocuments
+	}
+
+	return nil
 }

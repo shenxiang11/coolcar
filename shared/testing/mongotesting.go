@@ -7,6 +7,8 @@ import (
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/client"
 	"github.com/docker/go-connections/nat"
+	rentalpb "github.com/shenxiang11/coolcar/rental-service/gen/go/proto"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"testing"
@@ -80,11 +82,38 @@ func NewClient(c context.Context) (*mongo.Client, error) {
 }
 
 func SetupIndexes(c context.Context, d *mongo.Database) error {
-	//_, err := d.Collection("account").Indexes().CreateOne(c)
-	//if err != nil {
-	//	return err
-	//}
-	//
-	//_, err := d.Collection("trip").Indexes()
-	return nil
+	_, err := d.Collection("account").Indexes().CreateOne(c, mongo.IndexModel{
+		Keys: bson.D{
+			{Key: "open_id", Value: 1},
+		},
+		Options: options.Index().SetUnique(true),
+	})
+	if err != nil {
+		return err
+	}
+
+	_, err = d.Collection("trip").Indexes().CreateOne(c, mongo.IndexModel{
+		Keys: bson.D{
+			{Key: "trip.accountid", Value: 1},
+			{Key: "trip.status", Value: 1},
+		},
+		Options: options.Index().SetUnique(true).SetPartialFilterExpression(bson.M{
+			"trip.status": rentalpb.TripStatus_IN_PROGRESS,
+		}),
+	})
+	if err != nil {
+		return err
+	}
+
+	_, err = d.Collection("profile").Indexes().CreateOne(c, mongo.IndexModel{
+		Keys: bson.D{
+			{Key: "accountid", Value: 1},
+		},
+		Options: options.Index().SetUnique(true),
+	})
+	if err != nil {
+		return err
+	}
+
+	return err
 }

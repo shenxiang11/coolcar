@@ -1,8 +1,9 @@
-module github.com/shenxiang11/coolcar/rental
+module github.com/shenxiang11/coolcar/rental-service
 
 go 1.18
 
 require (
+	github.com/google/go-cmp v0.5.8
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.11.0
 	github.com/shenxiang11/coolcar/shared v0.0.0-20220729003453-d71abf7487e4
 	go.mongodb.org/mongo-driver v1.10.0

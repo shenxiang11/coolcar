@@ -1,8 +1,8 @@
 package main
 
 import (
-	rentalpb "github.com/shenxiang11/coolcar/rental/gen/go/proto"
-	"github.com/shenxiang11/coolcar/rental/trip"
+	rentalpb "github.com/shenxiang11/coolcar/rental-service/gen/go/proto"
+	"github.com/shenxiang11/coolcar/rental-service/trip"
 	"github.com/shenxiang11/coolcar/shared/server"
 	"google.golang.org/grpc"
 	"log"

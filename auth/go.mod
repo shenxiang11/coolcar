@@ -5,11 +5,11 @@ go 1.18
 require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.11.0
-	github.com/shenxiang11/coolcar/shared v0.0.0-00010101000000-000000000000
+	github.com/shenxiang11/coolcar/shared v0.0.0-20220729003453-d71abf7487e4
 	go.mongodb.org/mongo-driver v1.10.0
 	go.uber.org/zap v1.21.0
 	google.golang.org/grpc v1.48.0
-	google.golang.org/protobuf v1.28.0
+	google.golang.org/protobuf v1.28.1
 )
 
 require (
@@ -27,6 +27,7 @@ require (
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/opencontainers/image-spec v1.0.2 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/shenxiang11/coolcar/rental-service v0.0.0-00010101000000-000000000000 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
 	github.com/xdg-go/scram v1.1.1 // indirect
@@ -43,3 +44,5 @@ require (
 )
 
 replace github.com/shenxiang11/coolcar/shared => ../shared
+
+replace github.com/shenxiang11/coolcar/rental-service => ../rental
