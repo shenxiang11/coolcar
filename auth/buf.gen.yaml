@@ -13,3 +13,7 @@ plugins:
     opt:
       - paths=source_relative
       - grpc_api_configuration=./proto/auth.yaml
+  - name: ts
+    out: ../coolcar
+    strategy: all
+    path: /usr/local/bin/protoc-gen-ts_proto
