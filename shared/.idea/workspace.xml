@@ -5,20 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="59015875-49b3-45ea-ac8f-e347a0ea2dba" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../auth/auth/auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/auth/auth.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../auth/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../auth/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/../auth/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../coolcar/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../coolcar/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../rental/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/../rental/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../rental/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/../rental/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../rental/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../rental/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../rental/trip/manager/car/car.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../rental/trip/manager/poi/poi.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../rental/trip/manager/profile/profile.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../rental/trip/trip_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rental/gen/go/proto/rental.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/../rental/gen/go/proto/rental.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rental/gen/go/proto/rental.pb.gw.go" beforeDir="false" afterPath="$PROJECT_DIR$/../rental/gen/go/proto/rental.pb.gw.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rental/gen/go/proto/rental_grpc.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/../rental/gen/go/proto/rental_grpc.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rental/proto/rental.proto" beforeDir="false" afterPath="$PROJECT_DIR$/../rental/proto/rental.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rental/proto/rental.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../rental/proto/rental.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../rental/trip/dao/mongo.go" beforeDir="false" afterPath="$PROJECT_DIR$/../rental/trip/dao/mongo.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../rental/trip/dao/mongo_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/../rental/trip/dao/mongo_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../rental/trip/trip.go" beforeDir="false" afterPath="$PROJECT_DIR$/../rental/trip/trip.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing/mongotesting.go" beforeDir="false" afterPath="$PROJECT_DIR$/testing/mongotesting.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth/auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/auth/auth.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/id/id.go" beforeDir="false" afterPath="$PROJECT_DIR$/id/id.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

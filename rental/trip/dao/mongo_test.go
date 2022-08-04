@@ -129,7 +129,7 @@ func TestGetTrip(t *testing.T) {
 		t.Fatalf("cannot get trip: %v", err)
 	}
 
-	got, err := m.GetTrip(c, objid.ToTripID(tr.ID).String(), acct)
+	got, err := m.GetTrip(c, objid.ToTripID(tr.ID), acct)
 	if err != nil {
 		t.Errorf("cannot get trip: %v", err)
 	}
@@ -308,7 +308,7 @@ func TestUpdateTrip(t *testing.T) {
 				t.Errorf("%s: cannot update: %v", cc.name, err)
 			}
 		}
-		updatedTrip, err := m.GetTrip(c, tid.String(), aid)
+		updatedTrip, err := m.GetTrip(c, tid, aid)
 		if err != nil {
 			t.Errorf("%s: cannot get trip after update: %v", cc.name, err)
 		}

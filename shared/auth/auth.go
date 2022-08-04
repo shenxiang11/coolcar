@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/golang-jwt/jwt"
 	"github.com/shenxiang11/coolcar/shared/auth/token"
+	"github.com/shenxiang11/coolcar/shared/id"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
@@ -99,11 +100,15 @@ func tokenFromContext(c context.Context) (string, error) {
 	return tkn, nil
 }
 
-func AccountIDFromContext(c context.Context) (string, error) {
+func AccountIDFromContext(c context.Context) (id.AccountID, error) {
 	v := c.Value(accountIDKey{})
-	aid, ok := v.(string)
+	aid, ok := v.(id.AccountID)
 	if !ok {
 		return "", status.Error(codes.Unauthenticated, "")
 	}
 	return aid, nil
+}
+
+func ContextWithAccount(c context.Context, aid id.AccountID) context.Context {
+	return context.WithValue(c, accountIDKey{}, aid)
 }

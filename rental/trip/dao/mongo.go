@@ -56,8 +56,8 @@ func (m *Mongo) CreateTrip(c context.Context, trip *rentalpb.Trip) (*TripRecord,
 	return r, nil
 }
 
-func (m *Mongo) GetTrip(c context.Context, id string, accountID id.AccountID) (*TripRecord, error) {
-	objID, err := primitive.ObjectIDFromHex(id)
+func (m *Mongo) GetTrip(c context.Context, id id.TripID, accountID id.AccountID) (*TripRecord, error) {
+	objID, err := primitive.ObjectIDFromHex(id.String())
 	if err != nil {
 		return nil, fmt.Errorf("invalid id: %v", err)
 	}
