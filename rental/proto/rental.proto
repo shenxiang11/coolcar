@@ -5,7 +5,7 @@ package rental.v1;
 option go_package="coolcar/rental/proto/v1;rentalpb";
 
 service TripService {
-  rpc CreateTrip(CreateTripRequest) returns (CreateTripResponse);
+  rpc CreateTrip(CreateTripRequest) returns (TripEntity);
   rpc GetTrip(GetTripRequest) returns (Trip);
   rpc GetTrips(GetTripsRequest) returns (GetTripsResponse);
   rpc UpdateTrip(UpdateTripRequest) returns (Trip);

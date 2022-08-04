@@ -7,13 +7,13 @@ import (
 	"github.com/google/go-cmp/cmp"
 	rentalpb "github.com/shenxiang11/coolcar/rental-service/gen/go/proto"
 	"github.com/shenxiang11/coolcar/rental-service/trip/dao"
-	"github.com/shenxiang11/coolcar/rental-service/trip/manager/poi"
 	"github.com/shenxiang11/coolcar/shared/auth"
 	"github.com/shenxiang11/coolcar/shared/id"
 	"github.com/shenxiang11/coolcar/shared/mongo/objid"
 	"github.com/shenxiang11/coolcar/shared/server"
 	mongotesting "github.com/shenxiang11/coolcar/shared/testing"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"math/rand"
 	"os"
 	"testing"
 )
@@ -55,12 +55,24 @@ func (d *distCalc) DistanceKm(ctx context.Context, from *rentalpb.Location, to *
 	return 100, nil
 }
 
+type poiManager struct {
+	resolveErr error
+}
+
+func (p *poiManager) Resolve(ctx context.Context, location *rentalpb.Location) (string, error) {
+	if p.resolveErr != nil {
+		return "", p.resolveErr
+	}
+	return "桥梁", nil
+}
+
 func TestCreateTrip(t *testing.T) {
 	c := context.Background()
 
 	pm := &profileManager{}
 	cm := &carManager{}
-	s := newService(c, t, pm, cm)
+	poi := &poiManager{}
+	s := newService(c, t, pm, cm, poi)
 	s.NowFun = func() int64 {
 		return 1605695246
 	}
@@ -74,22 +86,30 @@ func TestCreateTrip(t *testing.T) {
 	}
 	pm.iID = "identity1"
 	golden := `{"account_id":%q,"car_id":"car1","start":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"桥梁","timestamp_sec":1605695246},"current":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"桥梁","timestamp_sec":1605695246},"status":1,"identity_id":"identity1"}`
+	goldenWithNoPoi := `{"account_id":%q,"car_id":"car1","start":{"location":{"latitude":32.123,"longitude":114.2525},"timestamp_sec":1605695246},"current":{"location":{"latitude":32.123,"longitude":114.2525},"timestamp_sec":1605695246},"status":1,"identity_id":"identity1"}`
 
 	cases := []struct {
-		name         string
-		accountID    id.AccountID
-		tripID       id.TripID
-		profileErr   error
-		carVerifyErr error
-		carUnlockErr error
-		want         string
-		wantErr      bool
+		name          string
+		accountID     id.AccountID
+		tripID        id.TripID
+		profileErr    error
+		carVerifyErr  error
+		carUnlockErr  error
+		poiResolveErr error
+		want          string
+		wantErr       bool
 	}{
 		{
 			name:      "normal_create",
 			accountID: "account1",
 			tripID:    "5f8132eb12714bf629489054",
 			want:      fmt.Sprintf(golden, "account1"),
+		},
+		{
+			name:      "repeat_create",
+			accountID: "account1",
+			tripID:    "5f8132eb12714bf629489054",
+			wantErr:   true,
 		},
 		{
 			name:       "profile_err",
@@ -112,6 +132,13 @@ func TestCreateTrip(t *testing.T) {
 			carUnlockErr: fmt.Errorf("unlock"),
 			want:         fmt.Sprintf(golden, "account4"),
 		},
+		{
+			name:          "poi_resolve_err",
+			accountID:     "account5",
+			tripID:        "5f8132eb12714bf629489058",
+			poiResolveErr: fmt.Errorf("poi_resolve_error"),
+			want:          fmt.Sprintf(goldenWithNoPoi, "account5"),
+		},
 	}
 
 	for _, cc := range cases {
@@ -122,6 +149,8 @@ func TestCreateTrip(t *testing.T) {
 			pm.err = cc.profileErr
 			cm.unlockErr = cc.carUnlockErr
 			cm.verifyErr = cc.carVerifyErr
+			poi.resolveErr = cc.poiResolveErr
+
 			c := auth.ContextWithAccount(c, cc.accountID)
 			res, err := s.CreateTrip(c, req)
 			if cc.wantErr {
@@ -151,7 +180,117 @@ func TestCreateTrip(t *testing.T) {
 	}
 }
 
-func newService(c context.Context, t *testing.T, pm ProfileManager, cm CarManager) *Service {
+func TestTripLifecycle(t *testing.T) {
+	c := auth.ContextWithAccount(context.Background(), id.AccountID("account_for_lifecycle"))
+	s := newService(c, t, &profileManager{}, &carManager{}, &poiManager{})
+
+	tid := id.TripID("5f8132eb22714bf629489056")
+	s.Mongo.GenIDFunc = func() primitive.ObjectID {
+		return objid.MustFromID(tid)
+	}
+	cases := []struct {
+		name    string
+		now     int64
+		op      func() (*rentalpb.Trip, error)
+		want    string
+		wantErr bool
+	}{
+		{
+			name: "create_trip",
+			now:  10000,
+			op: func() (*rentalpb.Trip, error) {
+				e, err := s.CreateTrip(c, &rentalpb.CreateTripRequest{
+					Start: &rentalpb.Location{
+						Latitude:  32.123,
+						Longitude: 114.2525,
+					},
+					CarId: "Car1",
+				})
+				if err != nil {
+					return nil, err
+				}
+				return e.Trip, nil
+			},
+			want: `{"account_id":"account_for_lifecycle","car_id":"Car1","start":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"桥梁","timestamp_sec":10000},"current":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"桥梁","timestamp_sec":10000},"status":1}`,
+		},
+		{
+			name: "update_trip",
+			now:  20000,
+			op: func() (*rentalpb.Trip, error) {
+				return s.UpdateTrip(c, &rentalpb.UpdateTripRequest{
+					Id: tid.String(),
+					Current: &rentalpb.Location{
+						Latitude:  28.234234,
+						Longitude: 123.243255,
+					},
+				})
+			},
+			want: `{"account_id":"account_for_lifecycle","car_id":"Car1","start":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"桥梁","timestamp_sec":10000},"current":{"location":{"latitude":28.234234,"longitude":123.243255},"fee_cent":7968,"km_driven":100,"poi_name":"桥梁","timestamp_sec":20000},"status":1}`,
+		},
+		{
+			name: "finish_trip",
+			now:  30000,
+			op: func() (*rentalpb.Trip, error) {
+				return s.UpdateTrip(c, &rentalpb.UpdateTripRequest{
+					Id:      tid.String(),
+					EndTrip: true,
+				})
+			},
+			want: `{"account_id":"account_for_lifecycle","car_id":"Car1","start":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"桥梁","timestamp_sec":10000},"current":{"location":{"latitude":28.234234,"longitude":123.243255},"fee_cent":11825,"km_driven":100,"poi_name":"桥梁","timestamp_sec":30000},"end":{"location":{"latitude":28.234234,"longitude":123.243255},"fee_cent":11825,"km_driven":100,"poi_name":"桥梁","timestamp_sec":30000},"status":2}`,
+		},
+		{
+			name: "query_trip",
+			now:  40000,
+			op: func() (*rentalpb.Trip, error) {
+				return s.GetTrip(c, &rentalpb.GetTripRequest{
+					Id: tid.String(),
+				})
+			},
+			want: `{"account_id":"account_for_lifecycle","car_id":"Car1","start":{"location":{"latitude":32.123,"longitude":114.2525},"poi_name":"桥梁","timestamp_sec":10000},"current":{"location":{"latitude":28.234234,"longitude":123.243255},"fee_cent":11825,"km_driven":100,"poi_name":"桥梁","timestamp_sec":30000},"end":{"location":{"latitude":28.234234,"longitude":123.243255},"fee_cent":11825,"km_driven":100,"poi_name":"桥梁","timestamp_sec":30000},"status":2}`,
+		},
+		{
+			name: "update_after_finished",
+			now:  50000,
+			op: func() (*rentalpb.Trip, error) {
+				return s.UpdateTrip(c, &rentalpb.UpdateTripRequest{
+					Id: tid.String(),
+				})
+			},
+			wantErr: true,
+		},
+	}
+
+	rand.Seed(1345)
+	for _, cc := range cases {
+		s.NowFun = func() int64 {
+			return cc.now
+		}
+		trip, err := cc.op()
+		if cc.wantErr {
+			if err == nil {
+				t.Errorf("%s: want error; got none", cc.name)
+			} else {
+				continue
+			}
+		}
+		if err != nil {
+			t.Errorf("%s: operation failed: %v", cc.name, err)
+			continue
+		}
+		b, err := json.Marshal(trip)
+		if err != nil {
+			t.Errorf("%s: failed marshalling response: %v", cc.name, err)
+		}
+		got := string(b)
+		if cc.want != got {
+			diff := cmp.Diff(cc.want, got)
+			fmt.Println(got)
+			t.Errorf("%s: incorrect response; -want +got: %s", cc.name, diff)
+		}
+	}
+}
+
+func newService(c context.Context, t *testing.T, pm ProfileManager, cm CarManager, poim POIManager) *Service {
 	mc, err := mongotesting.NewClient(c)
 	if err != nil {
 		t.Fatalf("cannot create mongo client: %v", err)
@@ -170,7 +309,7 @@ func newService(c context.Context, t *testing.T, pm ProfileManager, cm CarManage
 		Logger:         logger,
 		ProfileManager: pm,
 		CarManager:     cm,
-		POIManager:     &poi.Manager{},
+		POIManager:     poim,
 		DistanceCalc:   &distCalc{},
 	}
 }
