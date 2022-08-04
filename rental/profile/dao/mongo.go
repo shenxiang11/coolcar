@@ -34,7 +34,7 @@ type ProfileRecord struct {
 	PhotoBlobID string            `bson:"photoblobid"`
 }
 
-func (m *Mongo) GetProfile(c context.Context, aid id.IdentityID) (*ProfileRecord, error) {
+func (m *Mongo) GetProfile(c context.Context, aid id.AccountID) (*ProfileRecord, error) {
 	res := m.col.FindOne(c, bson.M{
 		accountIDField: aid.String(),
 	})
