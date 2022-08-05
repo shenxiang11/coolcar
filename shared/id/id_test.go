@@ -19,7 +19,7 @@ func TestConvert(t *testing.T) {
 		t.Fatalf("string 类型转换失败")
 	}
 
-	haha(sid)
+	//haha(sid)
 
 	aid, ok := str.(MyString)
 	if !ok {

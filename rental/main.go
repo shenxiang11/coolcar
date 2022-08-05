@@ -51,8 +51,8 @@ func main() {
 
 	profileService := &profile.Service{
 		BlobClient:        blobpb.NewBlobServiceClient(blobConn),
-		PhotoGetExpire:    5 * time.Second,
-		PhotoUploadExpire: 10 * time.Second,
+		PhotoGetExpire:    1 * time.Minute,
+		PhotoUploadExpire: 5 * time.Minute,
 		IdentityResolver:  aiClient,
 		Mongo:             profiledao.NewMongo(db),
 		Logger:            logger,

@@ -102,11 +102,11 @@ func tokenFromContext(c context.Context) (string, error) {
 
 func AccountIDFromContext(c context.Context) (id.AccountID, error) {
 	v := c.Value(accountIDKey{})
-	aid, ok := v.(id.AccountID)
+	aid, ok := v.(string) // FIXME: 直接断言到 AccountID 会报错
 	if !ok {
 		return "", status.Error(codes.Unauthenticated, "")
 	}
-	return aid, nil
+	return id.AccountID(aid), nil
 }
 
 func ContextWithAccount(c context.Context, aid id.AccountID) context.Context {

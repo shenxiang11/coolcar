@@ -45,7 +45,7 @@ func NewService(addr, secID, secKey string) (*Service, error) {
 	if err != nil {
 		return nil, fmt.Errorf("cannot parse addr: %v", err)
 	}
-	b := &cos.BaseURL{BatchURL: u}
+	b := &cos.BaseURL{BucketURL: u}
 
 	return &Service{
 		client: cos.NewClient(b, &http.Client{

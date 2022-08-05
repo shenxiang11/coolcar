@@ -37,6 +37,7 @@ func (s *Service) CreateBlob(c context.Context, req *blobpb.CreateBlobRequest) (
 
 	u, err := s.Storage.SignURL(c, http.MethodPut, br.Path, secToDuration(req.UploadUrlTimeoutSec))
 	if err != nil {
+		s.Logger.Error("cannot sign url: %v", zap.Error(err))
 		return nil, status.Errorf(codes.Aborted, "cannot sign url: %v", err)
 	}
 

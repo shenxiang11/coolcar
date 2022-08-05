@@ -99,8 +99,21 @@ func (s *Service) GetProfilePhoto(c context.Context, req *rentalpb.GetProfilePho
 }
 
 func (s *Service) CreateProfilePhoto(c context.Context, req *rentalpb.CreateProfilePhotoRequest) (*rentalpb.CreateProfilePhotoResponse, error) {
-	//TODO implement me
-	panic("implement me")
+	aid, err := auth.AccountIDFromContext(c)
+	if err != nil {
+		return nil, err
+	}
+
+	br, err := s.BlobClient.CreateBlob(c, &blobpb.CreateBlobRequest{
+		AccountId:           aid.String(),
+		UploadUrlTimeoutSec: int32(s.PhotoUploadExpire.Seconds()),
+	})
+	if err != nil {
+		s.Logger.Error("cannot update profile photo", zap.Error(err))
+		return nil, status.Error(codes.Aborted, "")
+	}
+
+	return &rentalpb.CreateProfilePhotoResponse{UploadUrl: br.UploadUrl}, nil
 }
 
 func (s *Service) CompleteProfilePhoto(c context.Context, req *rentalpb.CompleteProfilePhotoRequest) (*rentalpb.Identity, error) {
