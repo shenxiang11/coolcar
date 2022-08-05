@@ -2,13 +2,16 @@ package main
 
 import (
 	"context"
+	blobpb "github.com/shenxiang11/coolcar/blob/gen/go/proto"
 	rentalpb "github.com/shenxiang11/coolcar/rental-service/gen/go/proto"
+	"github.com/shenxiang11/coolcar/rental-service/profile"
+	profiledao "github.com/shenxiang11/coolcar/rental-service/profile/dao"
 	"github.com/shenxiang11/coolcar/rental-service/trip"
 	"github.com/shenxiang11/coolcar/rental-service/trip/ai"
 	"github.com/shenxiang11/coolcar/rental-service/trip/dao"
 	"github.com/shenxiang11/coolcar/rental-service/trip/manager/car"
 	"github.com/shenxiang11/coolcar/rental-service/trip/manager/poi"
-	"github.com/shenxiang11/coolcar/rental-service/trip/manager/profile"
+	profileManager "github.com/shenxiang11/coolcar/rental-service/trip/manager/profile"
 	coolenvpb "github.com/shenxiang11/coolcar/shared/coolenv"
 	"github.com/shenxiang11/coolcar/shared/server"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -34,17 +37,40 @@ func main() {
 		logger.Fatal("cannot connect aiservice", zap.Error(err))
 	}
 
+	db := mongoClient.Database("coolcar")
+
+	blobConn, err := grpc.Dial("localhost:10003", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		logger.Fatal("cannot connect blob service", zap.Error(err))
+	}
+
+	aiClient := &ai.Client{
+		AIClient:  coolenvpb.NewAIServiceClient(ac),
+		UseRealAI: true,
+	}
+
+	profileService := &profile.Service{
+		BlobClient:        blobpb.NewBlobServiceClient(blobConn),
+		PhotoGetExpire:    5 * time.Second,
+		PhotoUploadExpire: 10 * time.Second,
+		IdentityResolver:  aiClient,
+		Mongo:             profiledao.NewMongo(db),
+		Logger:            logger,
+	}
+
 	logger.Sugar().Fatal(server.RunGRPCServer(&server.GRPCConfig{
 		Name:              "rental",
 		Addr:              "localhost:10002",
 		AuthPublicKeyFile: "../shared/auth/public.key",
 		RegisterFunc: func(server *grpc.Server) {
 			rentalpb.RegisterTripServiceServer(server, &trip.Service{
-				Mongo:          dao.NewMongo(mongoClient.Database("coolcar")),
-				Logger:         logger,
-				ProfileManager: &profile.Manager{},
-				CarManager:     &car.Manager{},
-				POIManager:     &poi.Manager{},
+				Mongo:  dao.NewMongo(db),
+				Logger: logger,
+				ProfileManager: &profileManager.Manager{
+					Fetcher: profileService,
+				},
+				CarManager: &car.Manager{},
+				POIManager: &poi.Manager{},
 				DistanceCalc: &ai.Client{
 					AIClient: coolenvpb.NewAIServiceClient(ac),
 				},
@@ -52,6 +78,8 @@ func main() {
 					return time.Now().Unix()
 				},
 			})
+
+			rentalpb.RegisterProfileServiceServer(server, profileService)
 		},
 		Logger: logger,
 	}))

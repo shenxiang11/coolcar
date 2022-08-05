@@ -1,0 +1,14 @@
+version: v1
+plugins:
+  - name: go
+    out: gen/go
+    opt:
+      - paths=source_relative
+  - name: go-grpc
+    out: gen/go
+    opt:
+      - paths=source_relative
+  - name: ts
+    out: ../coolcar
+    strategy: all
+    path: /usr/local/bin/protoc-gen-ts_proto

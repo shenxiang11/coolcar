@@ -78,14 +78,14 @@ message LocationStatus {
 
 
 service ProfileService {
-  rpc GetProfile(GeProfileRequest) returns (Profile);
+  rpc GetProfile(GetProfileRequest) returns (Profile);
   rpc SubmitProfile(Identity) returns (Profile);
   rpc ClearProfile(ClearProfileRequest) returns(Profile);
 
   rpc GetProfilePhoto(GetProfilePhotoRequest) returns (GetProfilePhotoResponse);
   rpc CreateProfilePhoto(CreateProfilePhotoRequest) returns (CreateProfilePhotoResponse);
   rpc CompleteProfilePhoto(CompleteProfilePhotoRequest) returns (Identity);
-  rpc ClearProfilePhoto(ClearProfilePhotoRequest) returns (ClearProfilePhtotoResponse);
+  rpc ClearProfilePhoto(ClearProfilePhotoRequest) returns (ClearProfilePhotoResponse);
 }
 
 enum Gender {
@@ -112,7 +112,7 @@ message Identity {
   int64 birth_date_millis = 4;
 }
 
-message GeProfileRequest {}
+message GetProfileRequest {}
 
 message ClearProfileRequest {}
 
@@ -129,4 +129,4 @@ message CreateProfilePhotoResponse {
 message CompleteProfilePhotoRequest {}
 
 message ClearProfilePhotoRequest {}
-message ClearProfilePhtotoResponse {}
+message ClearProfilePhotoResponse {}

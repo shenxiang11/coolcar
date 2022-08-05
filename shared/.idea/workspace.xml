@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="59015875-49b3-45ea-ac8f-e347a0ea2dba" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../rental/profile/dao/mongo.go" beforeDir="false" afterPath="$PROJECT_DIR$/../rental/profile/dao/mongo.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../rental/profile/profile.go" beforeDir="false" afterPath="$PROJECT_DIR$/../rental/profile/profile.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../coolcar/proto/rental.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../coolcar/proto/rental.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rental/gen/go/proto/rental.pb.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rental/gen/go/proto/rental.pb.gw.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rental/gen/go/proto/rental_grpc.pb.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../rental/proto/rental.proto" beforeDir="false" afterPath="$PROJECT_DIR$/../rental/proto/rental.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

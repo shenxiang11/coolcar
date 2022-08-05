@@ -2,6 +2,8 @@ package profile
 
 import (
 	"context"
+	"fmt"
+	blobpb "github.com/shenxiang11/coolcar/blob/gen/go/proto"
 	rentalpb "github.com/shenxiang11/coolcar/rental-service/gen/go/proto"
 	"github.com/shenxiang11/coolcar/rental-service/profile/dao"
 	"github.com/shenxiang11/coolcar/shared/auth"
@@ -17,6 +19,8 @@ type IdentityResolver interface {
 }
 
 type Service struct {
+	rentalpb.UnimplementedProfileServiceServer
+	BlobClient        blobpb.BlobServiceClient
 	PhotoGetExpire    time.Duration
 	PhotoUploadExpire time.Duration
 	IdentityResolver  IdentityResolver
@@ -24,7 +28,8 @@ type Service struct {
 	Logger            *zap.Logger
 }
 
-func (s *Service) GetProfile(c context.Context, req *rentalpb.GeProfileRequest) (*rentalpb.Profile, error) {
+func (s *Service) GetProfile(c context.Context, req *rentalpb.GetProfileRequest) (*rentalpb.Profile, error) {
+	fmt.Println("========1========")
 	aid, err := auth.AccountIDFromContext(c)
 	if err != nil {
 		return nil, err
@@ -105,7 +110,7 @@ func (s *Service) CompleteProfilePhoto(c context.Context, req *rentalpb.Complete
 	panic("implement me")
 }
 
-func (s *Service) ClearProfilePhoto(c context.Context, req *rentalpb.ClearProfilePhotoRequest) (*rentalpb.ClearProfilePhtotoResponse, error) {
+func (s *Service) ClearProfilePhoto(c context.Context, req *rentalpb.ClearProfilePhotoRequest) (*rentalpb.ClearProfilePhotoResponse, error) {
 	//TODO implement me
 	panic("implement me")
 }

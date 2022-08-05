@@ -191,7 +191,7 @@ export interface Identity {
   birthDateMillis: number;
 }
 
-export interface GeProfileRequest {}
+export interface GetProfileRequest {}
 
 export interface ClearProfileRequest {}
 
@@ -211,7 +211,7 @@ export interface CompleteProfilePhotoRequest {}
 
 export interface ClearProfilePhotoRequest {}
 
-export interface ClearProfilePhtotoResponse {}
+export interface ClearProfilePhotoResponse {}
 
 function createBaseTripEntity(): TripEntity {
   return { id: "", trip: undefined };
@@ -1138,22 +1138,22 @@ export const Identity = {
   },
 };
 
-function createBaseGeProfileRequest(): GeProfileRequest {
+function createBaseGetProfileRequest(): GetProfileRequest {
   return {};
 }
 
-export const GeProfileRequest = {
+export const GetProfileRequest = {
   encode(
-    _: GeProfileRequest,
+    _: GetProfileRequest,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): GeProfileRequest {
+  decode(input: _m0.Reader | Uint8Array, length?: number): GetProfileRequest {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseGeProfileRequest();
+    const message = createBaseGetProfileRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1165,19 +1165,19 @@ export const GeProfileRequest = {
     return message;
   },
 
-  fromJSON(_: any): GeProfileRequest {
+  fromJSON(_: any): GetProfileRequest {
     return {};
   },
 
-  toJSON(_: GeProfileRequest): unknown {
+  toJSON(_: GetProfileRequest): unknown {
     const obj: any = {};
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<GeProfileRequest>, I>>(
+  fromPartial<I extends Exact<DeepPartial<GetProfileRequest>, I>>(
     _: I
-  ): GeProfileRequest {
-    const message = createBaseGeProfileRequest();
+  ): GetProfileRequest {
+    const message = createBaseGetProfileRequest();
     return message;
   },
 };
@@ -1528,13 +1528,13 @@ export const ClearProfilePhotoRequest = {
   },
 };
 
-function createBaseClearProfilePhtotoResponse(): ClearProfilePhtotoResponse {
+function createBaseClearProfilePhotoResponse(): ClearProfilePhotoResponse {
   return {};
 }
 
-export const ClearProfilePhtotoResponse = {
+export const ClearProfilePhotoResponse = {
   encode(
-    _: ClearProfilePhtotoResponse,
+    _: ClearProfilePhotoResponse,
     writer: _m0.Writer = _m0.Writer.create()
   ): _m0.Writer {
     return writer;
@@ -1543,10 +1543,10 @@ export const ClearProfilePhtotoResponse = {
   decode(
     input: _m0.Reader | Uint8Array,
     length?: number
-  ): ClearProfilePhtotoResponse {
+  ): ClearProfilePhotoResponse {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseClearProfilePhtotoResponse();
+    const message = createBaseClearProfilePhotoResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -1558,19 +1558,19 @@ export const ClearProfilePhtotoResponse = {
     return message;
   },
 
-  fromJSON(_: any): ClearProfilePhtotoResponse {
+  fromJSON(_: any): ClearProfilePhotoResponse {
     return {};
   },
 
-  toJSON(_: ClearProfilePhtotoResponse): unknown {
+  toJSON(_: ClearProfilePhotoResponse): unknown {
     const obj: any = {};
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<ClearProfilePhtotoResponse>, I>>(
+  fromPartial<I extends Exact<DeepPartial<ClearProfilePhotoResponse>, I>>(
     _: I
-  ): ClearProfilePhtotoResponse {
-    const message = createBaseClearProfilePhtotoResponse();
+  ): ClearProfilePhotoResponse {
+    const message = createBaseClearProfilePhotoResponse();
     return message;
   },
 };
@@ -1627,7 +1627,7 @@ export class TripServiceClientImpl implements TripService {
 }
 
 export interface ProfileService {
-  GetProfile(request: GeProfileRequest): Promise<Profile>;
+  GetProfile(request: GetProfileRequest): Promise<Profile>;
   SubmitProfile(request: Identity): Promise<Profile>;
   ClearProfile(request: ClearProfileRequest): Promise<Profile>;
   GetProfilePhoto(
@@ -1639,7 +1639,7 @@ export interface ProfileService {
   CompleteProfilePhoto(request: CompleteProfilePhotoRequest): Promise<Identity>;
   ClearProfilePhoto(
     request: ClearProfilePhotoRequest
-  ): Promise<ClearProfilePhtotoResponse>;
+  ): Promise<ClearProfilePhotoResponse>;
 }
 
 export class ProfileServiceClientImpl implements ProfileService {
@@ -1654,8 +1654,8 @@ export class ProfileServiceClientImpl implements ProfileService {
     this.CompleteProfilePhoto = this.CompleteProfilePhoto.bind(this);
     this.ClearProfilePhoto = this.ClearProfilePhoto.bind(this);
   }
-  GetProfile(request: GeProfileRequest): Promise<Profile> {
-    const data = GeProfileRequest.encode(request).finish();
+  GetProfile(request: GetProfileRequest): Promise<Profile> {
+    const data = GetProfileRequest.encode(request).finish();
     const promise = this.rpc.request(
       "rental.v1.ProfileService",
       "GetProfile",
@@ -1726,7 +1726,7 @@ export class ProfileServiceClientImpl implements ProfileService {
 
   ClearProfilePhoto(
     request: ClearProfilePhotoRequest
-  ): Promise<ClearProfilePhtotoResponse> {
+  ): Promise<ClearProfilePhotoResponse> {
     const data = ClearProfilePhotoRequest.encode(request).finish();
     const promise = this.rpc.request(
       "rental.v1.ProfileService",
@@ -1734,7 +1734,7 @@ export class ProfileServiceClientImpl implements ProfileService {
       data
     );
     return promise.then((data) =>
-      ClearProfilePhtotoResponse.decode(new _m0.Reader(data))
+      ClearProfilePhotoResponse.decode(new _m0.Reader(data))
     );
   }
 }

@@ -6,14 +6,13 @@ require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.11.0
 	github.com/shenxiang11/coolcar/shared v0.0.0-20220729003453-d71abf7487e4
-	go.mongodb.org/mongo-driver v1.10.0
+	go.mongodb.org/mongo-driver v1.10.1
 	go.uber.org/zap v1.21.0
 	google.golang.org/grpc v1.48.0
 	google.golang.org/protobuf v1.28.1
 )
 
 require (
-	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
 	github.com/Microsoft/go-winio v0.5.2 // indirect
 	github.com/docker/distribution v2.8.1+incompatible // indirect
 	github.com/docker/docker v20.10.17+incompatible // indirect
@@ -44,5 +43,7 @@ require (
 )
 
 replace github.com/shenxiang11/coolcar/shared => ../shared
+
+replace github.com/shenxiang11/coolcar/blob => ../blob
 
 replace github.com/shenxiang11/coolcar/rental-service => ../rental

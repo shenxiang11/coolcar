@@ -216,13 +216,13 @@ var TripService_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProfileServiceClient interface {
-	GetProfile(ctx context.Context, in *GeProfileRequest, opts ...grpc.CallOption) (*Profile, error)
+	GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*Profile, error)
 	SubmitProfile(ctx context.Context, in *Identity, opts ...grpc.CallOption) (*Profile, error)
 	ClearProfile(ctx context.Context, in *ClearProfileRequest, opts ...grpc.CallOption) (*Profile, error)
 	GetProfilePhoto(ctx context.Context, in *GetProfilePhotoRequest, opts ...grpc.CallOption) (*GetProfilePhotoResponse, error)
 	CreateProfilePhoto(ctx context.Context, in *CreateProfilePhotoRequest, opts ...grpc.CallOption) (*CreateProfilePhotoResponse, error)
 	CompleteProfilePhoto(ctx context.Context, in *CompleteProfilePhotoRequest, opts ...grpc.CallOption) (*Identity, error)
-	ClearProfilePhoto(ctx context.Context, in *ClearProfilePhotoRequest, opts ...grpc.CallOption) (*ClearProfilePhtotoResponse, error)
+	ClearProfilePhoto(ctx context.Context, in *ClearProfilePhotoRequest, opts ...grpc.CallOption) (*ClearProfilePhotoResponse, error)
 }
 
 type profileServiceClient struct {
@@ -233,7 +233,7 @@ func NewProfileServiceClient(cc grpc.ClientConnInterface) ProfileServiceClient {
 	return &profileServiceClient{cc}
 }
 
-func (c *profileServiceClient) GetProfile(ctx context.Context, in *GeProfileRequest, opts ...grpc.CallOption) (*Profile, error) {
+func (c *profileServiceClient) GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*Profile, error) {
 	out := new(Profile)
 	err := c.cc.Invoke(ctx, "/rental.v1.ProfileService/GetProfile", in, out, opts...)
 	if err != nil {
@@ -287,8 +287,8 @@ func (c *profileServiceClient) CompleteProfilePhoto(ctx context.Context, in *Com
 	return out, nil
 }
 
-func (c *profileServiceClient) ClearProfilePhoto(ctx context.Context, in *ClearProfilePhotoRequest, opts ...grpc.CallOption) (*ClearProfilePhtotoResponse, error) {
-	out := new(ClearProfilePhtotoResponse)
+func (c *profileServiceClient) ClearProfilePhoto(ctx context.Context, in *ClearProfilePhotoRequest, opts ...grpc.CallOption) (*ClearProfilePhotoResponse, error) {
+	out := new(ClearProfilePhotoResponse)
 	err := c.cc.Invoke(ctx, "/rental.v1.ProfileService/ClearProfilePhoto", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -300,13 +300,13 @@ func (c *profileServiceClient) ClearProfilePhoto(ctx context.Context, in *ClearP
 // All implementations must embed UnimplementedProfileServiceServer
 // for forward compatibility
 type ProfileServiceServer interface {
-	GetProfile(context.Context, *GeProfileRequest) (*Profile, error)
+	GetProfile(context.Context, *GetProfileRequest) (*Profile, error)
 	SubmitProfile(context.Context, *Identity) (*Profile, error)
 	ClearProfile(context.Context, *ClearProfileRequest) (*Profile, error)
 	GetProfilePhoto(context.Context, *GetProfilePhotoRequest) (*GetProfilePhotoResponse, error)
 	CreateProfilePhoto(context.Context, *CreateProfilePhotoRequest) (*CreateProfilePhotoResponse, error)
 	CompleteProfilePhoto(context.Context, *CompleteProfilePhotoRequest) (*Identity, error)
-	ClearProfilePhoto(context.Context, *ClearProfilePhotoRequest) (*ClearProfilePhtotoResponse, error)
+	ClearProfilePhoto(context.Context, *ClearProfilePhotoRequest) (*ClearProfilePhotoResponse, error)
 	mustEmbedUnimplementedProfileServiceServer()
 }
 
@@ -314,7 +314,7 @@ type ProfileServiceServer interface {
 type UnimplementedProfileServiceServer struct {
 }
 
-func (UnimplementedProfileServiceServer) GetProfile(context.Context, *GeProfileRequest) (*Profile, error) {
+func (UnimplementedProfileServiceServer) GetProfile(context.Context, *GetProfileRequest) (*Profile, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProfile not implemented")
 }
 func (UnimplementedProfileServiceServer) SubmitProfile(context.Context, *Identity) (*Profile, error) {
@@ -332,7 +332,7 @@ func (UnimplementedProfileServiceServer) CreateProfilePhoto(context.Context, *Cr
 func (UnimplementedProfileServiceServer) CompleteProfilePhoto(context.Context, *CompleteProfilePhotoRequest) (*Identity, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CompleteProfilePhoto not implemented")
 }
-func (UnimplementedProfileServiceServer) ClearProfilePhoto(context.Context, *ClearProfilePhotoRequest) (*ClearProfilePhtotoResponse, error) {
+func (UnimplementedProfileServiceServer) ClearProfilePhoto(context.Context, *ClearProfilePhotoRequest) (*ClearProfilePhotoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ClearProfilePhoto not implemented")
 }
 func (UnimplementedProfileServiceServer) mustEmbedUnimplementedProfileServiceServer() {}
@@ -349,7 +349,7 @@ func RegisterProfileServiceServer(s grpc.ServiceRegistrar, srv ProfileServiceSer
 }
 
 func _ProfileService_GetProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GeProfileRequest)
+	in := new(GetProfileRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -361,7 +361,7 @@ func _ProfileService_GetProfile_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: "/rental.v1.ProfileService/GetProfile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProfileServiceServer).GetProfile(ctx, req.(*GeProfileRequest))
+		return srv.(ProfileServiceServer).GetProfile(ctx, req.(*GetProfileRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
