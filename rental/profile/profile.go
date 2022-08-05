@@ -2,7 +2,6 @@ package profile
 
 import (
 	"context"
-	"fmt"
 	blobpb "github.com/shenxiang11/coolcar/blob/gen/go/proto"
 	rentalpb "github.com/shenxiang11/coolcar/rental-service/gen/go/proto"
 	"github.com/shenxiang11/coolcar/rental-service/profile/dao"
@@ -29,7 +28,6 @@ type Service struct {
 }
 
 func (s *Service) GetProfile(c context.Context, req *rentalpb.GetProfileRequest) (*rentalpb.Profile, error) {
-	fmt.Println("========1========")
 	aid, err := auth.AccountIDFromContext(c)
 	if err != nil {
 		return nil, err
